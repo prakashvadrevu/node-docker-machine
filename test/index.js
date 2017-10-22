@@ -482,6 +482,19 @@ function createMock(spies) {
       state.opts = opts
 
       process.nextTick(done, state.error || null, state.result)
+
+      var mockChildProcess = function() {
+        var stdout = function() {
+          this.on = function(data, cb) {}
+        }
+  
+        var stderr = function() {
+          this.on = function(data, cb) {}
+        }  
+        this.stdout = new stdout();
+        this.stderr = new stderr();
+      }
+      return new mockChildProcess();
     }
   }
 }

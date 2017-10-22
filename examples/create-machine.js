@@ -3,11 +3,11 @@
 const Machine = require('..');
 
 var options = {
-  "driver": "virtualbox"
+  "driver": "virtualbox",
+  "virtualbox-memory": "1024"
 };
 
-// List all machines with additional metadata
-Machine.create('beep', options, (err, machines) => {
-  if (err) throw err
-  console.log(machines);
+Machine.create('test', options, (err) => {
+  if (err) throw err;
+  else console.log("machine 'test' created successfully!");
 });

@@ -40,7 +40,7 @@ class Machine {
   }
 
   static command(args, done) {
-    cp.execFile('docker-machine', [].concat(args), {
+    return cp.execFile('docker-machine', [].concat(args), {
       cwd: env.DOCKER_TOOLBOX_INSTALL_PATH || '.',
       encoding: 'utf8'
     }, done)
@@ -70,10 +70,16 @@ class Machine {
     }
     args.push(machineName);
 
-    Machine.command(args, (err, stdout, stderr) => {
+    var process = Machine.command(args, (err) => {
       if (err) done(err)
-      else done(err, stdout, stderr);
+      else done();
     })
+    process.stdout.on('data', function(data) {
+      console.log(data);
+    });
+    process.stderr.on('data', function(data) {
+      done("Machine creation failed. " + JSON.stringify(data));
+    });
   }
 
   static start(name, done) {
