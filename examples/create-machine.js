@@ -1,13 +1,13 @@
 'use strict';
 
-const Machine = require('..');
+const Machine = require('..')
 
-var options = {
+const options = {
   "driver": "virtualbox",
   "virtualbox-memory": "1024"
 };
 
 Machine.create('test', options, (err) => {
-  if (err) throw err;
+  if (err) throw err
   else console.log("machine 'test' created successfully!");
 });
