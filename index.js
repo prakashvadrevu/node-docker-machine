@@ -60,12 +60,18 @@ class Machine {
   }
 
   static create(machineName, options, done) {
+    if (typeof options === 'function') {
+      done = options
+      // Using "virtualbox" as the default driver
+      options = {
+        driver: 'virtualbox'
+      }
+    }
     var args = [];
     args.push('create');
     for (var key in options) {
         if (options.hasOwnProperty(key)) {
-            args.push('--' + key);
-            args.push(options[key]);
+            args.push(`--${key}`, options[key]);
         }
     }
     args.push(machineName);

@@ -41,6 +41,13 @@ Machine.list({ inspect: true }, (err, machines) => {
 ```js
 const Machine = require('docker-machine');
 
+// Creates a machine with driver "virtualbox"
+Machine.create('test', (err) => {
+  if (err) throw err
+  else console.log("machine 'test' created successfully!");
+});
+
+// Pass args related to the driver you use
 var options = {
   "driver": "virtualbox",
   "virtualbox-memory": "1024"

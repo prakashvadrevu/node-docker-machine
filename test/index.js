@@ -91,17 +91,24 @@ test('isRunning', function (t) {
 })
 
 test('create', function(t) {
-  t.plan(2)
+  t.plan(4)
 
   const s1 = spy({})
+  const s2 = spy({})
+
+  Machine.create('beep', (err) => {
+    t.ifError(err, 'no start error')
+    t.same(s1.args, ['create', '--driver', 'virtualbox', 'beep'])
+  })
 
   const options = {
-    "driver": "virtualbox"
+    "driver": "generic",
+    "generic-ssh-user": "root"
   };
 
   Machine.create('beep', options, (err) => {
     t.ifError(err, 'no start error')
-    t.same(s1.args, ['create', '--driver', 'virtualbox', 'beep'])
+    t.same(s2.args, ['create', '--driver', 'generic', '--generic-ssh-user', 'root', 'beep'])
   })
 
 })
