@@ -59,6 +59,23 @@ class Machine {
     })
   }
 
+  static create(machineName, options, done) {
+    var args = [];
+    args.push('create');
+    for (var key in options) {
+        if (options.hasOwnProperty(key)) {
+            args.push('--' + key);
+            args.push(options[key]);
+        }
+    }
+    args.push(machineName);
+
+    Machine.command(args, (err, stdout, stderr) => {
+      if (err) done(err)
+      else done(err, stdout, stderr);
+    })
+  }
+
   static start(name, done) {
     Machine.command(['start', name], (err) => {
       if (HOST_NON_EXISTENT.test(err)) {

@@ -90,6 +90,22 @@ test('isRunning', function (t) {
   })
 })
 
+test('create', function(t) {
+  t.plan(2)
+
+  const s1 = spy({})
+
+  var options = {
+    "driver": "virtualbox"
+  };
+
+  Machine.create('beep', options, (err) => {
+    t.ifError(err, 'no start error')
+    t.same(s1.args, ['create', '--driver', 'virtualbox', 'beep'])
+  })
+
+})
+
 test('start', function (t) {
   t.plan(10)
 
